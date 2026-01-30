@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rizz</title>
+
+  <!-- Instrument Serif (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <script type="module" crossorigin src="/assets/index-hIdbDB7U.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-J04odVKC.css">
+</head>
+
+<body>
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loaderText">Rizz</div>
+  </div>
+
+  <div class="bgFX"></div>
+
+  <main class="wrap">
+
+    <!-- Header Group -->
+    <div class="headerGroup">
+      <h1 class="header">Rizz</h1>
+      <div class="subHeader">Rizz coin, get instant rizz.</div>
+      <div class="caRow">
+        <span class="caLabel">CA:</span>
+        <span class="caValue" id="caValue">8x...dead</span>
+        <button class="iconBtnMini" id="copyCaBtn" aria-label="Copy Contract Address">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Response Card -->
+    <section class="card output" id="outputCard" aria-live="polite">
+      <div class="responseLoader" id="responseLoader">Rizzing...</div>
+      <!-- Empty initially -->
+      <p class="rizzText" id="rizzText"></p>
+
+      <p class="subhead">Confidence > cringe.</p>
+    </section>
+
+    <!-- Actions Row (Icons) - Initially Hidden -->
+    <div class="actionsRow" id="actionsRow">
+      <!-- Copy -->
+      <button class="actionIconBtn" id="copyBtn" type="button" aria-label="Copy Rizz">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+      </button>
+      <!-- Save -->
+      <button class="actionIconBtn" id="saveBtn" type="button" aria-label="Save to History">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Generate Button (Bottom) -->
+    <button class="btn" id="genBtn">
+      Generate Rizz
+    </button>
+  </main>
+
+  <!-- Floating History Widget -->
+  <div class="historyWidget">
+    <div class="historyList" id="historyList"></div>
+    <button class="historyBtn" id="historyBtn">
+      <svg class="historyIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <span class="historyLabel">History</span>
+    </button>
+  </div>
+
+  <div class="toast" id="toast">Copied ✓</div>
+
+  <!-- Entry Point -->
+</body>
+
+</html>

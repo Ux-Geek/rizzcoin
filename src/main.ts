@@ -25,7 +25,7 @@ const copyCaBtn = document.getElementById("copyCaBtn") as HTMLButtonElement | nu
 const historyBtn = document.getElementById("historyBtn") as HTMLButtonElement | null;
 const historyList = document.getElementById("historyList") as HTMLDivElement | null;
 
-const outputCard = document.getElementById("outputCard") as HTMLElement | null;
+
 const rizzText = document.getElementById("rizzText") as HTMLParagraphElement | null;
 const responseLoader = document.getElementById("responseLoader") as HTMLDivElement | null;
 const toast = document.getElementById("toast") as HTMLDivElement | null;
