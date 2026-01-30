@@ -73,9 +73,12 @@
 
     .btn {
       height: 62px;
-      width: 100%;
+      width: fit-content;
+      margin: 0 auto;
+      padding: 0 48px;
       border: 1px solid #333;
-      border-radius: 12px;
+      border-radius: 999px;
+      /* Perfectly rounded */
       background: #FFF;
       /* White background */
       color: var(--ink);
@@ -90,8 +93,16 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+      transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease, opacity 120ms ease;
     }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
 
     .btn:active {
       transform: translateY(1px) scale(0.995);
@@ -112,7 +123,7 @@
       background: var(--glass);
       border: 1px solid var(--border);
       box-shadow: 0 12px 26px rgba(20, 19, 24, 0.10);
-      padding: 16px;
+      padding: 32px;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
@@ -547,6 +558,9 @@
     genBtn.addEventListener("click", () => {
       triggerHaptic();
 
+      // Set inactive state
+      genBtn.disabled = true;
+
       // UI Reset
       outputCard.classList.add("show");
       rizzText.style.display = 'none';
@@ -559,6 +573,9 @@
 
         const line = pickLine();
         rizzText.textContent = line;
+
+        // Re-enable button
+        genBtn.disabled = false;
       }, 1500); // 1.5s "Rizzing" delay
     });
 
