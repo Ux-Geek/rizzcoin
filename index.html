@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rizz</title>
+
+  <!-- Instrument Serif (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #FFD550;
+      --ink: #141318;
+      --glass: rgba(255,255,255,0.62);
+      --glass2: rgba(255,255,255,0.48);
+      --border: rgba(20,19,24,0.12);
+      --shadow: 0 18px 35px rgba(20,19,24,0.18);
+      --radius: 20px;
+      --pad: 20px;
+      --max: 640px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow-x:hidden;
+    }
+
+    /* subtle premium texture */
+    .bgFX{
+      position:fixed; inset:0; pointer-events:none;
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(255,255,255,0.35), transparent 55%),
+        radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,0.22), transparent 55%),
+        radial-gradient(900px 700px at 50% 90%, rgba(20,19,24,0.06), transparent 60%);
+      mix-blend-mode: overlay;
+    }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: calc(var(--pad) + 6px) var(--pad) var(--pad);
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+      min-height: 100%;
+    }
+
+    .header{
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(36px, 6vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-top: 10px;
+    }
+
+    .btn{
+      height: 62px;
+      width: 100%;
+      border: 0;
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: var(--bg);
+      font-weight: 600; /* SF Pro will render as a medium/semibold; visually it reads “premium” */
+      font-size: 16px;
+      letter-spacing: 0.01em;
+      cursor:pointer;
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+    }
+    .btn:active{
+      transform: translateY(1px) scale(0.995);
+      box-shadow: 0 10px 18px rgba(20,19,24,0.18);
+      filter: brightness(0.98);
+    }
+    .spark{
+      width:10px; height:10px;
+      border-radius:999px;
+      background: var(--bg);
+      box-shadow: 0 0 0 6px rgba(255,213,80,0.18);
+    }
+
+    .card{
+      border-radius: var(--radius);
+      background: var(--glass);
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 26px rgba(20,19,24,0.10);
+      padding: 16px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .output{
+      transform-origin: top;
+      transition: transform 180ms ease, opacity 180ms ease;
+      opacity: 0;
+      transform: translateY(6px) scale(0.99);
+    }
+    .output.show{
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .rizzText{
+      font-size: 18px;
+      line-height: 1.45;
+      margin: 0 0 12px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.55);
+      color: var(--ink);
+      font-size: 14px;
+      cursor:pointer;
+      transition: transform 120ms ease, background 120ms ease;
+    }
+    .pill:active{ transform: translateY(1px); background: rgba(255,255,255,0.65); }
+
+    .subhead{
+      font-size: 13px;
+      opacity: 0.75;
+      margin: 10px 0 0;
+    }
+
+    .historyHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .historyTitle{
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0.9;
+      margin: 0;
+    }
+    .clearBtn{
+      border: 0;
+      background: transparent;
+      color: rgba(20,19,24,0.7);
+      font-size: 13px;
+      cursor:pointer;
+      padding: 8px 10px;
+      border-radius: 10px;
+    }
+    .clearBtn:active{ background: rgba(255,255,255,0.25); }
+
+    .history{
+      max-height: 42vh;
+      overflow:auto;
+      padding-right: 4px;
+    }
+
+    .item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      min-height: 48px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--glass2);
+      border: 1px solid var(--border);
+      margin-top: 10px;
+      cursor:pointer;
+    }
+
+    .itemText{
+      flex: 1;
+      min-width: 0;
+      font-size: 14px;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      opacity: 0.92;
+    }
+
+    .copyMini{
+      white-space: nowrap;
+      font-size: 12px;
+      opacity: 0.75;
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(20,19,24,0.88);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    @media (min-width: 900px){
+      .wrap{ padding-top: 34px; gap: 18px; }
+      .btn{ height: 64px; font-size: 16px; }
+      .rizzText{ font-size: 19px; }
+      .history{ max-height: 44vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bgFX"></div>
+
+  <main class="wrap">
+    <div class="header">Rizz</div>
+
+    <button class="btn" id="genBtn">
+      <span class="spark" aria-hidden="true"></span>
+      Generate Rizz
+    </button>
+
+    <section class="card output" id="outputCard" aria-live="polite">
+      <p class="rizzText" id="rizzText">Tap “Generate Rizz” to get a line.</p>
+      <div class="actions">
+        <button class="pill" id="copyBtn" type="button">Copy</button>
+        <button class="pill" id="saveBtn" type="button">Save to history</button>
+      </div>
+      <p class="subhead">Keep it respectful. Confidence > cringe.</p>
+    </section>
+
+    <section class="card">
+      <div class="historyHead">
+        <h3 class="historyTitle">History</h3>
+        <button class="clearBtn" id="clearBtn" type="button">Clear</button>
+      </div>
+      <div class="history" id="history"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Copied ✓</div>
+
+  <script>
+    const LINES = [
+      "I’m not trying to be extra… but you just raised the standard in here.",
+      "Quick question—are you always this effortless, or am I just lucky today?",
+      "You’ve got that calm confidence… it’s dangerous.",
+      "I was gonna play it cool, but you’re making it hard to pretend I didn’t notice.",
+      "If good energy had a face… yeah, it’d be you.",
+      "Not to interrupt your day, but you just became the highlight.",
+      "You look like someone who makes ordinary moments feel expensive.",
+      "I’m normally focused… but you’ve officially stolen the agenda.",
+      "I’m not flirting. I’m just being honest—you’re a vibe.",
+      "You’ve got that ‘main character’ aura. I respect it."
+    ];
+
+    const genBtn = document.getElementById("genBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const saveBtn = document.getElementById("saveBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    const outputCard = document.getElementById("outputCard");
+    const rizzText = document.getElementById("rizzText");
+    const historyEl = document.getElementById("history");
+    const toast = document.getElementById("toast");
+
+    const STORAGE_KEY = "rizz_history_v1";
+
+    function triggerHaptic() {
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    }
+
+    function showToast(text){
+      toast.textContent = text;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1100);
+    }
+
+    function getHistory(){
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function setHistory(items){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, 30)));
+    }
+
+    function renderHistory(){
+      const items = getHistory();
+      historyEl.innerHTML = "";
+      if(items.length === 0){
+        const empty = document.createElement("div");
+        empty.style.opacity = "0.7";
+        empty.style.fontSize = "13px";
+        empty.style.marginTop = "12px";
+        empty.textContent = "No rizz saved yet. Hit Generate.";
+        historyEl.appendChild(empty);
+        return;
+      }
+
+      items.forEach((line, idx) => {
+        const row = document.createElement("div");
+        row.className = "item";
+        row.title = "Tap to copy";
+        row.innerHTML = `
+          <div class="itemText">\${line}</div>
+          <div class="copyMini">Tap to copy</div>
+        `;
+        row.addEventListener("click", async () => {
+          triggerHaptic();
+          await navigator.clipboard.writeText(line);
+          showToast("Copied ✓");
+        });
+        historyEl.appendChild(row);
+      });
+    }
+
+    function pickLine(){
+      const i = Math.floor(Math.random() * LINES.length);
+      return LINES[i];
+    }
+
+    genBtn.addEventListener("click", () => {
+      triggerHaptic();
+      const line = pickLine();
+      rizzText.textContent = line;
+      outputCard.classList.add("show");
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      triggerHaptic();
+      const text = rizzText.textContent || "";
+      if(!text || text.includes("Tap “Generate")) return;
+      await navigator.clipboard.writeText(text);
+      showToast("Copied ✓");
+    });
+
+    saveBtn.addEventListener("click", () => {
+      triggerHaptic();
+      const text = rizzText.textContent || "";
+      if(!text || text.includes("Tap “Generate")) return;
+      const items = getHistory();
+      // prevent dupes at top
+      const next = [text, ...items.filter(x => x !== text)];
+      setHistory(next);
+      renderHistory();
+      showToast("Saved ✓");
+    });
+
+    clearBtn.addEventListener("click", () => {
+      // Intentionally not adding haptic here as it is destructive/cleanup, or maybe I should?
+      // User asked for "button press + output card pop".
+      // I'll leave it simple.
+      setHistory([]);
+      renderHistory();
+      showToast("Cleared");
+    });
+
+    renderHistory();
+  </script>
+</body>
+</html>
