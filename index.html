@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -11,49 +12,58 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
   <style>
-    :root{
+    :root {
       --bg: #FFD550;
       --ink: #141318;
-      --glass: rgba(255,255,255,0.62);
-      --glass2: rgba(255,255,255,0.48);
-      --border: rgba(20,19,24,0.12);
-      --shadow: 0 18px 35px rgba(20,19,24,0.18);
+      --glass: rgba(255, 255, 255, 0.62);
+      --glass2: rgba(255, 255, 255, 0.48);
+      --border: rgba(255, 255, 255, 0.12);
+      --shadow: 0 18px 35px rgba(20, 19, 24, 0.18);
       --radius: 20px;
       --pad: 20px;
       --max: 640px;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
       background: var(--bg);
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      overflow-x:hidden;
+      overflow-x: hidden;
     }
 
     /* subtle premium texture */
-    .bgFX{
-      position:fixed; inset:0; pointer-events:none;
+    .bgFX {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
       background:
-        radial-gradient(1200px 600px at 20% 10%, rgba(255,255,255,0.35), transparent 55%),
-        radial-gradient(900px 500px at 80% 30%, rgba(255,255,255,0.22), transparent 55%),
-        radial-gradient(900px 700px at 50% 90%, rgba(20,19,24,0.06), transparent 60%);
+        radial-gradient(1200px 600px at 20% 10%, rgba(255, 255, 255, 0.35), transparent 55%),
+        radial-gradient(900px 500px at 80% 30%, rgba(255, 255, 255, 0.22), transparent 55%),
+        radial-gradient(900px 700px at 50% 90%, rgba(20, 19, 24, 0.06), transparent 60%);
       mix-blend-mode: overlay;
     }
 
-    .wrap{
+    .wrap {
       max-width: var(--max);
       margin: 0 auto;
       padding: calc(var(--pad) + 6px) var(--pad) var(--pad);
-      display:flex;
-      flex-direction:column;
+      display: flex;
+      flex-direction: column;
       gap: 16px;
       min-height: 100%;
     }
 
-    .header{
+    .header {
       font-family: "Instrument Serif", serif;
       font-size: clamp(36px, 6vw, 56px);
       line-height: 1.05;
@@ -61,121 +71,137 @@
       margin-top: 10px;
     }
 
-    .btn{
+    .btn {
       height: 62px;
       width: 100%;
       border: 0;
       border-radius: var(--radius);
       background: var(--ink);
-      color: var(--bg);
-      font-weight: 600; /* SF Pro will render as a medium/semibold; visually it reads “premium” */
+      color: #FFF;
+      /* Changed to white as requested */
+      font-weight: 600;
+      /* SF Pro will render as a medium/semibold; visually it reads “premium” */
       font-size: 16px;
       letter-spacing: 0.01em;
-      cursor:pointer;
+      cursor: pointer;
       box-shadow: var(--shadow);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
     }
-    .btn:active{
+
+    .btn:active {
       transform: translateY(1px) scale(0.995);
-      box-shadow: 0 10px 18px rgba(20,19,24,0.18);
+      box-shadow: 0 10px 18px rgba(20, 19, 24, 0.18);
       filter: brightness(0.98);
     }
-    .spark{
-      width:10px; height:10px;
-      border-radius:999px;
+
+    .spark {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
       background: var(--bg);
-      box-shadow: 0 0 0 6px rgba(255,213,80,0.18);
+      box-shadow: 0 0 0 6px rgba(255, 213, 80, 0.18);
     }
 
-    .card{
+    .card {
       border-radius: var(--radius);
       background: var(--glass);
       border: 1px solid var(--border);
-      box-shadow: 0 12px 26px rgba(20,19,24,0.10);
+      box-shadow: 0 12px 26px rgba(20, 19, 24, 0.10);
       padding: 16px;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
 
-    .output{
+    .output {
       transform-origin: top;
       transition: transform 180ms ease, opacity 180ms ease;
       opacity: 0;
       transform: translateY(6px) scale(0.99);
     }
-    .output.show{
+
+    .output.show {
       opacity: 1;
       transform: translateY(0) scale(1);
     }
 
-    .rizzText{
+    .rizzText {
       font-size: 18px;
       line-height: 1.45;
       margin: 0 0 12px;
     }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    .pill{
+
+    .pill {
       height: 40px;
       padding: 0 14px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: rgba(255,255,255,0.55);
+      background: rgba(255, 255, 255, 0.55);
       color: var(--ink);
       font-size: 14px;
-      cursor:pointer;
+      cursor: pointer;
       transition: transform 120ms ease, background 120ms ease;
     }
-    .pill:active{ transform: translateY(1px); background: rgba(255,255,255,0.65); }
 
-    .subhead{
+    .pill:active {
+      transform: translateY(1px);
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .subhead {
       font-size: 13px;
       opacity: 0.75;
       margin: 10px 0 0;
     }
 
-    .historyHead{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+    .historyHead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 10px;
       margin-top: 6px;
     }
-    .historyTitle{
+
+    .historyTitle {
       font-size: 14px;
       font-weight: 600;
       opacity: 0.9;
       margin: 0;
     }
-    .clearBtn{
+
+    .clearBtn {
       border: 0;
       background: transparent;
-      color: rgba(20,19,24,0.7);
+      color: rgba(20, 19, 24, 0.7);
       font-size: 13px;
-      cursor:pointer;
+      cursor: pointer;
       padding: 8px 10px;
       border-radius: 10px;
     }
-    .clearBtn:active{ background: rgba(255,255,255,0.25); }
 
-    .history{
+    .clearBtn:active {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .history {
       max-height: 42vh;
-      overflow:auto;
+      overflow: auto;
       padding-right: 4px;
     }
 
-    .item{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 10px;
       min-height: 48px;
       padding: 12px 14px;
@@ -183,10 +209,10 @@
       background: var(--glass2);
       border: 1px solid var(--border);
       margin-top: 10px;
-      cursor:pointer;
+      cursor: pointer;
     }
 
-    .itemText{
+    .itemText {
       flex: 1;
       min-width: 0;
       font-size: 14px;
@@ -198,40 +224,107 @@
       opacity: 0.92;
     }
 
-    .copyMini{
+    .copyMini {
       white-space: nowrap;
       font-size: 12px;
       opacity: 0.75;
     }
 
-    .toast{
+    .toast {
       position: fixed;
       left: 50%;
       bottom: 18px;
       transform: translateX(-50%);
-      background: rgba(20,19,24,0.88);
+      background: rgba(20, 19, 24, 0.88);
       color: #fff;
       padding: 10px 14px;
       border-radius: 999px;
       font-size: 13px;
       opacity: 0;
-      pointer-events:none;
+      pointer-events: none;
       transition: opacity 180ms ease, transform 180ms ease;
     }
-    .toast.show{
+
+    .toast.show {
       opacity: 1;
       transform: translateX(-50%) translateY(-4px);
     }
 
-    @media (min-width: 900px){
-      .wrap{ padding-top: 34px; gap: 18px; }
-      .btn{ height: 64px; font-size: 16px; }
-      .rizzText{ font-size: 19px; }
-      .history{ max-height: 44vh; }
+    /* Loader */
+    .loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 300ms ease, visibility 300ms ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loaderText {
+      font-family: "Instrument Serif", serif;
+      font-size: 64px;
+      font-weight: 400;
+      color: rgba(20, 19, 24, 0.3);
+      /* dimmed base */
+      position: relative;
+      overflow: hidden;
+      /* moving gradient for shimmer */
+      background: linear-gradient(110deg,
+          rgba(20, 19, 24, 0.3) 40%,
+          rgba(255, 255, 255, 0.9) 50%,
+          rgba(20, 19, 24, 0.3) 60%);
+      background-size: 200% 100%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 1.5s infinite linear;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 150% 0;
+      }
+
+      100% {
+        background-position: -50% 0;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .wrap {
+        padding-top: 34px;
+        gap: 18px;
+      }
+
+      .btn {
+        height: 64px;
+        font-size: 16px;
+      }
+
+      .rizzText {
+        font-size: 19px;
+      }
+
+      .history {
+        max-height: 44vh;
+      }
     }
   </style>
 </head>
+
 <body>
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loaderText">Rizz</div>
+  </div>
+
   <div class="bgFX"></div>
 
   <main class="wrap">
@@ -285,6 +378,18 @@
     const rizzText = document.getElementById("rizzText");
     const historyEl = document.getElementById("history");
     const toast = document.getElementById("toast");
+    const loader = document.getElementById("loader");
+
+    // Remove loader after delay
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        loader.classList.add("hidden");
+        // fully remove from DOM after transition
+        setTimeout(() => {
+          loader.remove();
+        }, 300);
+      }, 1600); // 1.6s delay to enjoy animation
+    });
 
     const STORAGE_KEY = "rizz_history_v1";
 
@@ -294,13 +399,13 @@
       }
     }
 
-    function showToast(text){
+    function showToast(text) {
       toast.textContent = text;
       toast.classList.add("show");
       setTimeout(() => toast.classList.remove("show"), 1100);
     }
 
-    function getHistory(){
+    function getHistory() {
       try {
         return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
       } catch {
@@ -308,14 +413,14 @@
       }
     }
 
-    function setHistory(items){
+    function setHistory(items) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, 30)));
     }
 
-    function renderHistory(){
+    function renderHistory() {
       const items = getHistory();
       historyEl.innerHTML = "";
-      if(items.length === 0){
+      if (items.length === 0) {
         const empty = document.createElement("div");
         empty.style.opacity = "0.7";
         empty.style.fontSize = "13px";
@@ -342,7 +447,7 @@
       });
     }
 
-    function pickLine(){
+    function pickLine() {
       const i = Math.floor(Math.random() * LINES.length);
       return LINES[i];
     }
@@ -357,7 +462,7 @@
     copyBtn.addEventListener("click", async () => {
       triggerHaptic();
       const text = rizzText.textContent || "";
-      if(!text || text.includes("Tap “Generate")) return;
+      if (!text || text.includes("Tap “Generate")) return;
       await navigator.clipboard.writeText(text);
       showToast("Copied ✓");
     });
@@ -365,7 +470,7 @@
     saveBtn.addEventListener("click", () => {
       triggerHaptic();
       const text = rizzText.textContent || "";
-      if(!text || text.includes("Tap “Generate")) return;
+      if (!text || text.includes("Tap “Generate")) return;
       const items = getHistory();
       // prevent dupes at top
       const next = [text, ...items.filter(x => x !== text)];
@@ -386,4 +491,5 @@
     renderHistory();
   </script>
 </body>
+
 </html>
