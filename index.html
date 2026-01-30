@@ -20,7 +20,7 @@
       --border: rgba(255, 255, 255, 0.12);
       --shadow: 0 18px 35px rgba(20, 19, 24, 0.18);
       --radius: 20px;
-      --pad: 20px;
+      --pad: 24px;
       --max: 640px;
     }
 
@@ -39,6 +39,8 @@
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       overflow-x: hidden;
+      overflow-y: hidden;
+      /* Prevent scroll on body, scroll inside wrap if needed */
     }
 
     /* subtle premium texture */
@@ -56,68 +58,74 @@
     .wrap {
       max-width: var(--max);
       margin: 0 auto;
-      padding: calc(var(--pad) + 6px) var(--pad) var(--pad);
+      padding: calc(var(--pad) + 12px) var(--pad) var(--pad);
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      min-height: 100%;
+      height: 100dvh;
+      position: relative;
+    }
+
+    .headerGroup {
+      margin-bottom: 16px;
+      text-align: left;
     }
 
     .header {
       font-family: "Instrument Serif", serif;
-      font-size: clamp(36px, 6vw, 56px);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      margin-top: 10px;
+      font-size: clamp(42px, 8vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin: 0;
+      color: var(--ink);
     }
 
-    .btn {
-      height: 62px;
-      width: fit-content;
-      margin: 0 auto;
-      padding: 0 48px;
-      border: 1px solid #333;
-      border-radius: 999px;
-      /* Perfectly rounded */
-      background: #FFF;
-      /* White background */
-      color: var(--ink);
-      /* Dark text */
-      font-weight: 600;
-      /* SF Pro will render as a medium/semibold; visually it reads “premium” */
-      font-size: 16px;
-      letter-spacing: 0.01em;
+    .subHeader {
+      font-size: 15px;
+      font-weight: 500;
+      opacity: 0.85;
+      margin-top: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .caRow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 13px;
+      color: rgba(20, 19, 24, 0.6);
+      font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
+    }
+
+    .caValue {
+      opacity: 0.8;
+      user-select: all;
+    }
+
+    .iconBtnMini {
+      background: transparent;
+      border: none;
+      padding: 4px;
       cursor: pointer;
-      box-shadow: var(--shadow);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease, opacity 120ms ease;
+      color: inherit;
+      border-radius: 4px;
+      transition: background 150ms ease;
     }
 
-    .btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none !important;
-      box-shadow: none !important;
+    .iconBtnMini:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: var(--ink);
     }
 
-
-    .btn:active {
-      transform: translateY(1px) scale(0.995);
-      box-shadow: 0 10px 18px rgba(20, 19, 24, 0.18);
-      filter: brightness(0.98);
+    .iconBtnMini svg {
+      width: 14px;
+      height: 14px;
     }
 
-    .spark {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--bg);
-      box-shadow: 0 0 0 6px rgba(255, 213, 80, 0.18);
-    }
-
+    /* Response Box */
     .card {
       border-radius: var(--radius);
       background: var(--glass);
@@ -126,36 +134,52 @@
       padding: 32px;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
     }
 
     .output {
-      transform-origin: top;
-      transition: transform 180ms ease, opacity 180ms ease;
-      opacity: 0;
-      transform: translateY(6px) scale(0.99);
-    }
-
-    .output.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+      transform-origin: center;
+      transition: transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 300ms ease;
     }
 
     .rizzText {
-      font-size: 26px;
-      /* Bigger */
-      font-weight: 700;
-      /* Bolder */
-      line-height: 1.35;
-      margin: 0 0 16px;
-      letter-spacing: -0.01em;
+      font-size: clamp(24px, 5vw, 32px);
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin: auto 0;
+      max-width: 90%;
+      min-height: 1em;
+    }
+
+    .rizzText:empty::before {
+      content: "";
+      display: inline-block;
+    }
+
+    .subhead {
+      font-size: 12px;
+      opacity: 0.5;
+      margin-top: auto;
+      padding-top: 24px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
     }
 
     .responseLoader {
       display: none;
       font-family: "Instrument Serif", serif;
-      font-size: 32px;
-      margin: 0 0 16px;
+      font-size: 36px;
       font-weight: 400;
+      margin: auto;
       color: rgba(20, 19, 24, 0.3);
       background: linear-gradient(110deg,
           rgba(20, 19, 24, 0.3) 40%,
@@ -170,6 +194,123 @@
 
     .responseLoader.active {
       display: block;
+    }
+
+    /* Actions Row (Icons) */
+    .actionsRow {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease, transform 200ms ease;
+      transform: translateY(10px);
+    }
+
+    .actionsRow.show {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .actionIconBtn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 150ms ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .actionIconBtn:hover {
+      background: #FFF;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .actionIconBtn:active {
+      transform: scale(0.95);
+    }
+
+    .actionIconBtn svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 2;
+    }
+
+    /* Generate Button */
+    .btn {
+      height: 72px;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      margin-top: auto;
+      /* Push to bottom */
+
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 999px;
+      background: #FFF;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease, opacity 120ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(20, 19, 24, 0.22);
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 8px 20px rgba(20, 19, 24, 0.15);
+      filter: brightness(0.98);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 100px;
+      /* Above button roughly */
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(20, 19, 24, 0.9);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease, transform 200ms ease;
+      z-index: 200;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     /* History Widget */
@@ -225,14 +366,11 @@
       transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
       overflow: hidden;
       max-width: 56px;
-      /* Icon only */
       white-space: nowrap;
     }
 
-    /* Hover expand effect */
     .historyBtn:hover {
       max-width: 140px;
-      /* Expand to show text */
       gap: 10px;
       padding-right: 24px;
     }
@@ -266,6 +404,7 @@
       cursor: pointer;
       transition: background 150ms ease;
       border: 1px solid transparent;
+      text-align: left;
     }
 
     .hItem:hover {
@@ -277,70 +416,11 @@
       transform: scale(0.98);
     }
 
-    .hItem:last-child {
-      margin-bottom: 0;
-    }
-
     .emptyState {
       padding: 20px;
       text-align: center;
       opacity: 0.6;
       font-size: 13px;
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .pill {
-      height: 40px;
-      padding: 0 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.55);
-      color: var(--ink);
-      font-size: 14px;
-      cursor: pointer;
-      transition: transform 120ms ease, background 120ms ease;
-    }
-
-    .pill:active {
-      transform: translateY(1px);
-      background: rgba(255, 255, 255, 0.65);
-    }
-
-    .subhead {
-      font-size: 13px;
-      opacity: 0.75;
-      margin: 10px 0 0;
-    }
-
-    .copyMini {
-      white-space: nowrap;
-      font-size: 12px;
-      opacity: 0.75;
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      background: rgba(20, 19, 24, 0.88);
-      color: #fff;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 180ms ease, transform 180ms ease;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(-4px);
     }
 
     /* Loader */
@@ -365,10 +445,8 @@
       font-size: 64px;
       font-weight: 400;
       color: rgba(20, 19, 24, 0.3);
-      /* dimmed base */
       position: relative;
       overflow: hidden;
-      /* moving gradient for shimmer */
       background: linear-gradient(110deg,
           rgba(20, 19, 24, 0.3) 40%,
           rgba(255, 255, 255, 0.9) 50%,
@@ -392,18 +470,29 @@
 
     @media (min-width: 900px) {
       .wrap {
-        padding-top: 34px;
-        gap: 18px;
+        padding-top: 48px;
+        gap: 24px;
+        max-width: 680px;
       }
 
+      .card {
+        padding: 48px;
+      }
+
+      .rizzText {
+        font-size: 42px;
+      }
+    }
+
+    @media (max-width: 480px) {
       .btn {
         height: 64px;
         font-size: 16px;
       }
 
-      .rizzText {
-        font-size: 28px;
-        /* Even bigger on desktop */
+      .header {
+        font-size: 42px;
+        /* Ensure logical size on small screens */
       }
     }
   </style>
@@ -418,22 +507,54 @@
   <div class="bgFX"></div>
 
   <main class="wrap">
-    <div class="header">Rizz</div>
 
-    <button class="btn" id="genBtn">
-      <span class="spark" aria-hidden="true"></span>
-      Generate Rizz
-    </button>
+    <!-- Header Group -->
+    <div class="headerGroup">
+      <h1 class="header">Rizz</h1>
+      <div class="subHeader">Rizz coin, get instant rizz.</div>
+      <div class="caRow">
+        <span class="caLabel">CA:</span>
+        <span class="caValue" id="caValue">8x...dead</span>
+        <button class="iconBtnMini" id="copyCaBtn" aria-label="Copy Contract Address">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
 
+    <!-- Response Card -->
     <section class="card output" id="outputCard" aria-live="polite">
       <div class="responseLoader" id="responseLoader">Rizzing...</div>
-      <p class="rizzText" id="rizzText">Tap “Generate Rizz” to get a line.</p>
-      <div class="actions">
-        <button class="pill" id="copyBtn" type="button">Copy</button>
-        <button class="pill" id="saveBtn" type="button">Save to history</button>
-      </div>
-      <p class="subhead">Keep it respectful. Confidence > cringe.</p>
+      <!-- Empty initially -->
+      <p class="rizzText" id="rizzText"></p>
+
+      <p class="subhead">Confidence > cringe.</p>
     </section>
+
+    <!-- Actions Row (Icons) - Initially Hidden -->
+    <div class="actionsRow" id="actionsRow">
+      <!-- Copy -->
+      <button class="actionIconBtn" id="copyBtn" type="button" aria-label="Copy Rizz">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+      </button>
+      <!-- Save -->
+      <button class="actionIconBtn" id="saveBtn" type="button" aria-label="Save to History">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Generate Button (Bottom) -->
+    <button class="btn" id="genBtn">
+      Generate Rizz
+    </button>
   </main>
 
   <!-- Floating History Widget -->
@@ -468,6 +589,9 @@
     const genBtn = document.getElementById("genBtn");
     const copyBtn = document.getElementById("copyBtn");
     const saveBtn = document.getElementById("saveBtn");
+    const actionsRow = document.getElementById("actionsRow");
+    const copyCaBtn = document.getElementById("copyCaBtn");
+    const caValue = document.getElementById("caValue");
 
     // History elements
     const historyBtn = document.getElementById("historyBtn");
@@ -483,11 +607,10 @@
     window.addEventListener("load", () => {
       setTimeout(() => {
         loader.classList.add("hidden");
-        // fully remove from DOM after transition
         setTimeout(() => {
           loader.remove();
         }, 300);
-      }, 3000); // 3s delay as requested
+      }, 3000);
     });
 
     const STORAGE_KEY = "rizz_history_v1";
@@ -501,7 +624,7 @@
     function showToast(text) {
       toast.textContent = text;
       toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 1100);
+      setTimeout(() => toast.classList.remove("show"), 1500);
     }
 
     function getHistory() {
@@ -518,7 +641,7 @@
 
     function renderHistory() {
       const items = getHistory();
-      historyList.innerHTML = ""; // target new list
+      historyList.innerHTML = "";
 
       if (items.length === 0) {
         const empty = document.createElement("div");
@@ -536,14 +659,16 @@
         // Interaction: Load into main view
         row.addEventListener("click", () => {
           triggerHaptic();
-          // Load text
+
+          // Show content
           rizzText.textContent = line;
           rizzText.style.display = 'block';
-          outputCard.classList.add("show");
 
-          // Optionally close history?
-          // historyList.classList.remove("active"); 
-          // Keeping it open feels fine too, user might be browsing.
+          // Show actions
+          actionsRow.classList.add("show");
+
+          // Close history just in case
+          historyList.classList.remove("active");
         });
         historyList.appendChild(row);
       });
@@ -552,7 +677,7 @@
     function pickLine() {
       const i = Math.floor(Math.random() * LINES.length);
       const icon = ICONS[Math.floor(Math.random() * ICONS.length)];
-      return `\${icon} \${LINES[i]}`; // Correctly using template literal now
+      return `\${icon} \${LINES[i]}`;
     }
 
     genBtn.addEventListener("click", () => {
@@ -561,10 +686,10 @@
       // Set inactive state
       genBtn.disabled = true;
 
-      // UI Reset
-      outputCard.classList.add("show");
+      // Reset
       rizzText.style.display = 'none';
       responseLoader.classList.add('active');
+      actionsRow.classList.remove("show"); // Hide actions while loading
 
       // Mimic API/Think time
       setTimeout(() => {
@@ -574,24 +699,31 @@
         const line = pickLine();
         rizzText.textContent = line;
 
+        // Show actions
+        actionsRow.classList.add("show");
+
         // Re-enable button
         genBtn.disabled = false;
-      }, 1500); // 1.5s "Rizzing" delay
+      }, 1500);
     });
 
     copyBtn.addEventListener("click", async () => {
       triggerHaptic();
       let text = rizzText.textContent || "";
-      if (!text || text.includes("Tap “Generate")) return;
+      if (!text) return;
 
-      // clean icon for clipboard? User usually wants the text. 
-      // but "copy toast" implies exact copy. I'll keep the icon for vibe.
-      // Wait, actually user propbably wants the rizz not the emoji.
-      // I'll strip the leading emoji + space for copy.
+      // Strip leading emoji + space for cleaner copy
       text = text.replace(/^[✨🔥💫⚡️💎🎯🌶️]\s*/, '');
 
       await navigator.clipboard.writeText(text);
-      showToast("Copied ✓");
+      showToast("Copied Rizz ✓");
+    });
+
+    copyCaBtn.addEventListener("click", async () => {
+      triggerHaptic();
+      const text = "8x...dead"; // In reality copy full address
+      await navigator.clipboard.writeText(text);
+      showToast("CA Copied ✓");
     });
 
     saveBtn.addEventListener("click", () => {
@@ -600,14 +732,10 @@
       if (!text || text.includes("Tap “Generate")) return;
 
       const items = getHistory();
-      // prevent dupes at top
       const next = [text, ...items.filter(x => x !== text)];
       setHistory(next);
       renderHistory();
       showToast("Saved ✓");
-
-      // Open history to show it saved?
-      historyList.classList.add("active");
     });
 
     // Toggle History
