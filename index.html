@@ -130,9 +130,151 @@
     }
 
     .rizzText {
-      font-size: 18px;
-      line-height: 1.45;
-      margin: 0 0 12px;
+      font-size: 26px;
+      /* Bigger */
+      font-weight: 700;
+      /* Bolder */
+      line-height: 1.35;
+      margin: 0 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .responseLoader {
+      display: none;
+      font-family: "Instrument Serif", serif;
+      font-size: 32px;
+      margin: 0 0 16px;
+      font-weight: 400;
+      color: rgba(20, 19, 24, 0.3);
+      background: linear-gradient(110deg,
+          rgba(20, 19, 24, 0.3) 40%,
+          rgba(255, 255, 255, 0.9) 50%,
+          rgba(20, 19, 24, 0.3) 60%);
+      background-size: 200% 100%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 1s infinite linear;
+    }
+
+    .responseLoader.active {
+      display: block;
+    }
+
+    /* History Widget */
+    .historyWidget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .historyList {
+      width: 300px;
+      max-width: 80vw;
+      max-height: 50vh;
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+      transform-origin: bottom right;
+      transform: scale(0);
+      opacity: 0;
+      transition: transform 250ms cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 200ms ease;
+      pointer-events: none;
+    }
+
+    .historyList.active {
+      transform: scale(1);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .historyBtn {
+      height: 56px;
+      background: #FFF;
+      color: var(--ink);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 28px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+      overflow: hidden;
+      max-width: 56px;
+      /* Icon only */
+      white-space: nowrap;
+    }
+
+    /* Hover expand effect */
+    .historyBtn:hover {
+      max-width: 140px;
+      /* Expand to show text */
+      gap: 10px;
+      padding-right: 24px;
+    }
+
+    .historyIcon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .historyLabel {
+      font-weight: 600;
+      font-size: 15px;
+      opacity: 0;
+      transform: translateX(10px);
+      transition: all 200ms ease;
+    }
+
+    .historyBtn:hover .historyLabel {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .hItem {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.4);
+      margin-bottom: 6px;
+      font-size: 14px;
+      line-height: 1.4;
+      cursor: pointer;
+      transition: background 150ms ease;
+      border: 1px solid transparent;
+    }
+
+    .hItem:hover {
+      background: #FFF;
+      border-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .hItem:active {
+      transform: scale(0.98);
+    }
+
+    .hItem:last-child {
+      margin-bottom: 0;
+    }
+
+    .emptyState {
+      padding: 20px;
+      text-align: center;
+      opacity: 0.6;
+      font-size: 13px;
     }
 
     .actions {
@@ -162,67 +304,6 @@
       font-size: 13px;
       opacity: 0.75;
       margin: 10px 0 0;
-    }
-
-    .historyHead {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 6px;
-    }
-
-    .historyTitle {
-      font-size: 14px;
-      font-weight: 600;
-      opacity: 0.9;
-      margin: 0;
-    }
-
-    .clearBtn {
-      border: 0;
-      background: transparent;
-      color: rgba(20, 19, 24, 0.7);
-      font-size: 13px;
-      cursor: pointer;
-      padding: 8px 10px;
-      border-radius: 10px;
-    }
-
-    .clearBtn:active {
-      background: rgba(255, 255, 255, 0.25);
-    }
-
-    .history {
-      max-height: 42vh;
-      overflow: auto;
-      padding-right: 4px;
-    }
-
-    .item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      min-height: 48px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      background: var(--glass2);
-      border: 1px solid var(--border);
-      margin-top: 10px;
-      cursor: pointer;
-    }
-
-    .itemText {
-      flex: 1;
-      min-width: 0;
-      font-size: 14px;
-      line-height: 1.35;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      opacity: 0.92;
     }
 
     .copyMini {
@@ -310,11 +391,8 @@
       }
 
       .rizzText {
-        font-size: 19px;
-      }
-
-      .history {
-        max-height: 44vh;
+        font-size: 28px;
+        /* Even bigger on desktop */
       }
     }
   </style>
@@ -337,6 +415,7 @@
     </button>
 
     <section class="card output" id="outputCard" aria-live="polite">
+      <div class="responseLoader" id="responseLoader">Rizzing...</div>
       <p class="rizzText" id="rizzText">Tap “Generate Rizz” to get a line.</p>
       <div class="actions">
         <button class="pill" id="copyBtn" type="button">Copy</button>
@@ -344,15 +423,18 @@
       </div>
       <p class="subhead">Keep it respectful. Confidence > cringe.</p>
     </section>
-
-    <section class="card">
-      <div class="historyHead">
-        <h3 class="historyTitle">History</h3>
-        <button class="clearBtn" id="clearBtn" type="button">Clear</button>
-      </div>
-      <div class="history" id="history"></div>
-    </section>
   </main>
+
+  <!-- Floating History Widget -->
+  <div class="historyWidget">
+    <div class="historyList" id="historyList"></div>
+    <button class="historyBtn" id="historyBtn">
+      <svg class="historyIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <span class="historyLabel">History</span>
+    </button>
+  </div>
 
   <div class="toast" id="toast">Copied ✓</div>
 
@@ -370,14 +452,19 @@
       "You’ve got that ‘main character’ aura. I respect it."
     ];
 
+    const ICONS = ["✨", "🔥", "💫", "⚡️", "💎", "🎯", "🌶️"];
+
     const genBtn = document.getElementById("genBtn");
     const copyBtn = document.getElementById("copyBtn");
     const saveBtn = document.getElementById("saveBtn");
-    const clearBtn = document.getElementById("clearBtn");
+
+    // History elements
+    const historyBtn = document.getElementById("historyBtn");
+    const historyList = document.getElementById("historyList");
 
     const outputCard = document.getElementById("outputCard");
     const rizzText = document.getElementById("rizzText");
-    const historyEl = document.getElementById("history");
+    const responseLoader = document.getElementById("responseLoader");
     const toast = document.getElementById("toast");
     const loader = document.getElementById("loader");
 
@@ -420,50 +507,72 @@
 
     function renderHistory() {
       const items = getHistory();
-      historyEl.innerHTML = "";
+      historyList.innerHTML = ""; // target new list
+
       if (items.length === 0) {
         const empty = document.createElement("div");
-        empty.style.opacity = "0.7";
-        empty.style.fontSize = "13px";
-        empty.style.marginTop = "12px";
-        empty.textContent = "No rizz saved yet. Hit Generate.";
-        historyEl.appendChild(empty);
+        empty.className = "emptyState";
+        empty.textContent = "No rizz saved yet.";
+        historyList.appendChild(empty);
         return;
       }
 
-      items.forEach((line, idx) => {
+      items.forEach((line) => {
         const row = document.createElement("div");
-        row.className = "item";
-        row.title = "Tap to copy";
-        row.innerHTML = `
-          <div class="itemText">\${line}</div>
-          <div class="copyMini">Tap to copy</div>
-        `;
-        row.addEventListener("click", async () => {
+        row.className = "hItem";
+        row.textContent = line;
+
+        // Interaction: Load into main view
+        row.addEventListener("click", () => {
           triggerHaptic();
-          await navigator.clipboard.writeText(line);
-          showToast("Copied ✓");
+          // Load text
+          rizzText.textContent = line;
+          rizzText.style.display = 'block';
+          outputCard.classList.add("show");
+
+          // Optionally close history?
+          // historyList.classList.remove("active"); 
+          // Keeping it open feels fine too, user might be browsing.
         });
-        historyEl.appendChild(row);
+        historyList.appendChild(row);
       });
     }
 
     function pickLine() {
       const i = Math.floor(Math.random() * LINES.length);
-      return LINES[i];
+      const icon = ICONS[Math.floor(Math.random() * ICONS.length)];
+      return `\${icon} \${LINES[i]}`; // Correctly using template literal now
     }
 
     genBtn.addEventListener("click", () => {
       triggerHaptic();
-      const line = pickLine();
-      rizzText.textContent = line;
+
+      // UI Reset
       outputCard.classList.add("show");
+      rizzText.style.display = 'none';
+      responseLoader.classList.add('active');
+
+      // Mimic API/Think time
+      setTimeout(() => {
+        responseLoader.classList.remove('active');
+        rizzText.style.display = 'block';
+
+        const line = pickLine();
+        rizzText.textContent = line;
+      }, 1500); // 1.5s "Rizzing" delay
     });
 
     copyBtn.addEventListener("click", async () => {
       triggerHaptic();
-      const text = rizzText.textContent || "";
+      let text = rizzText.textContent || "";
       if (!text || text.includes("Tap “Generate")) return;
+
+      // clean icon for clipboard? User usually wants the text. 
+      // but "copy toast" implies exact copy. I'll keep the icon for vibe.
+      // Wait, actually user propbably wants the rizz not the emoji.
+      // I'll strip the leading emoji + space for copy.
+      text = text.replace(/^[✨🔥💫⚡️💎🎯🌶️]\s*/, '');
+
       await navigator.clipboard.writeText(text);
       showToast("Copied ✓");
     });
@@ -472,21 +581,22 @@
       triggerHaptic();
       const text = rizzText.textContent || "";
       if (!text || text.includes("Tap “Generate")) return;
+
       const items = getHistory();
       // prevent dupes at top
       const next = [text, ...items.filter(x => x !== text)];
       setHistory(next);
       renderHistory();
       showToast("Saved ✓");
+
+      // Open history to show it saved?
+      historyList.classList.add("active");
     });
 
-    clearBtn.addEventListener("click", () => {
-      // Intentionally not adding haptic here as it is destructive/cleanup, or maybe I should?
-      // User asked for "button press + output card pop".
-      // I'll leave it simple.
-      setHistory([]);
-      renderHistory();
-      showToast("Cleared");
+    // Toggle History
+    historyBtn.addEventListener("click", () => {
+      triggerHaptic();
+      historyList.classList.toggle("active");
     });
 
     renderHistory();
